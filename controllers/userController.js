@@ -478,13 +478,12 @@ exports.editUserProfile = (req, res, next) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const  userId = req.body._id;
-  console.log(userId);
+
   User.findById(userId)
       .then((user) => {
         user.firstName = firstName;
         user.lastName = lastName;
-         user.save();
-        res.status(200).json({ message: "User successfully updated." });
+        return user.save();
       })
       .catch((err) => {
         if (!err.statusCode) err.statusCode = 500;
